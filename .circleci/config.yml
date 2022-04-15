@@ -9,7 +9,7 @@ jobs:
       - checkout
       - restore_cache:
           keys:
-            - go-mod-v4-{{ checksum "go.sum" }}
+            - go-mod-cimg-{{ checksum "go.sum" }}
       - run:
           name: Install Dependencies
           command: go mod download
@@ -21,7 +21,13 @@ jobs:
           name: Run tests
           command: |
             mkdir -p /tmp/test-reports
-            gotestsum --junitfile /tmp/test-reports/unit-tests.xml
+            gotestsum --junitfile /tmp/test-reports/unit-tests.xml -- -race -coverprofile=coverage.out -covermode=atomic
+      - run:
+          name: Upload coverage results
+          command: |
+            curl -Os https://uploader.codecov.io/latest/linux/codecov
+            chmod +x codecov
+            ./codecov
       - store_test_results:
           path: /tmp/test-reports
 
