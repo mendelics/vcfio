@@ -1,0 +1,37 @@
+version: 2.1
+
+jobs:
+  test:
+    working_directory: ~/repo
+    docker:
+      - image: cimg/go:1.18.1
+    steps:
+      - checkout
+      - restore_cache:
+          keys:
+            - go-mod-cimg-{{ checksum "go.sum" }}
+      - run:
+          name: Install Dependencies
+          command: go mod download
+      - save_cache:
+          key: go-mod-v4-{{ checksum "go.sum" }}
+          paths:
+            - "/go/pkg/mod"
+      - run:
+          name: Run tests
+          command: |
+            mkdir -p /tmp/test-reports
+            gotestsum --junitfile /tmp/test-reports/unit-tests.xml -- -race -coverprofile=coverage.out -covermode=atomic
+      - run:
+          name: Upload coverage results
+          command: |
+            curl -Os https://uploader.codecov.io/latest/linux/codecov
+            chmod +x codecov
+            ./codecov
+      - store_test_results:
+          path: /tmp/test-reports
+
+workflows:
+  tests:
+    jobs:
+      - test
