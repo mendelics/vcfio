@@ -7,8 +7,8 @@ import (
 	"strings"
 )
 
-// extractVcfFORMAT parses genotyping information in latter columns
-func extractVcfFORMAT(fields []string, info *InfoByte, sampleNames []string, svtype string) ([]SampleSpecific, error) {
+// ExtractVcfFORMAT parses genotyping information in latter columns
+func ExtractVcfFORMAT(fields []string, info *InfoByte, sampleNames []string, svtype string) ([]SampleSpecific, error) {
 	// Samples parsing (column 8 for FORMAT, and 9+ for sample genotypes)
 	genotypes := []SampleSpecific{}
 

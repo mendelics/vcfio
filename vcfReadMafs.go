@@ -6,7 +6,7 @@ import (
 	"strings"
 )
 
-func extractVcfMAFS(chr string, info *InfoByte) (ControlDB, error) {
+func ExtractVcfMAFS(chr string, info *InfoByte) (ControlDB, error) {
 	var g ControlInfo
 
 	gnomadINFO, err := info.Get("GNOMAD")
