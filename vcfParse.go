@@ -35,26 +35,26 @@ func ParseVariant(line string, header *Header) (VariantInfo, Quality, []SampleSp
 	info := NewInfoByte([]byte(fields[7]), header)
 
 	// Parse VCF
-	variantInfo, err := extractVcfFields(chr, start, ref, alt, info)
+	variantInfo, err := ExtractVcfFields(chr, start, ref, alt, info)
 	if err != nil {
 		log.Fatalf("Error extracting vcf INFO, %v\n", err)
 	}
 
 	// Quality and reads parameters
-	quality, err := extractVcfQUAL(fields, info)
+	quality, err := ExtractVcfQUAL(fields, info)
 	if err != nil {
 		log.Fatalf("Error extracting vcf QUAL, %v\n", err)
 	}
 
 	// Genotypes for each sample in VCF
-	genotypes, err := extractVcfFORMAT(fields, info, header.SampleNames, variantInfo.SVtype)
+	genotypes, err := ExtractVcfFORMAT(fields, info, header.SampleNames, variantInfo.SVtype)
 	if err != nil {
 		log.Println(line)
 		log.Fatalf("Error extracting vcf FORMAT, %v\n", err)
 	}
 
 	// MAF (GnomAD) and label info
-	mafs, err := extractVcfMAFS(chr, info)
+	mafs, err := ExtractVcfMAFS(chr, info)
 	if err != nil {
 		log.Fatalf("Error extracting vcf MAFS, %v\n", err)
 	}

@@ -163,8 +163,8 @@ func parseHeader(s *bufio.Scanner) (*Header, error) {
 	return header, nil
 }
 
-// extractVcfFields parses basic information about variant
-func extractVcfFields(chr string, start int, ref, alt string, info *InfoByte) (VariantInfo, error) {
+// ExtractVcfFields parses basic information about variant
+func ExtractVcfFields(chr string, start int, ref, alt string, info *InfoByte) (VariantInfo, error) {
 	var vcf VariantInfo
 
 	// Empty Alt

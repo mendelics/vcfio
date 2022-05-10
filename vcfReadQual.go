@@ -7,8 +7,8 @@ import (
 	"strconv"
 )
 
-// extractVcfQUAL parses information about variant quality
-func extractVcfQUAL(fields []string, info *InfoByte) (Quality, error) {
+// ExtractVcfQUAL parses information about variant quality
+func ExtractVcfQUAL(fields []string, info *InfoByte) (Quality, error) {
 	// Variant quality in this instance comes from fields 5 and 6
 	qual := Quality{}
 	var err error
